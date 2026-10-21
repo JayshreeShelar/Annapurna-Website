@@ -1,7 +1,0 @@
-To change a hero/banner photo later, replace the file in img/ with the SAME name (JPG).
-
-HOME HERO (2 slides, auto change)   img/hero-home-1.jpg, img/hero-home-2.jpg   1920 x 1080 px (dish on the right half)
-BANNERS (1920 x 600 px, text sits on the left)
-  img/banner-story.jpg   img/banner-menu.jpg   img/banner-specials.jpg
-  img/banner-gallery.jpg   img/banner-reservations.jpg   img/banner-contact.jpg
-Keep each file under 400 KB.
