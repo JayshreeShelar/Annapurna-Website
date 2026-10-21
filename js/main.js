@@ -1,19 +1,15 @@
-/* Annapurna - single entry script for every page.
+/* Annapurna - single script for every page (needs icons.js loaded first, plain script, works without a server).
    Loads header/footer, icons, sprigs, scroll effects, and page-specific features
    (each feature only runs if its elements exist on the page). */
-import { injectSprite, hydrateIcons } from './icons.js';
+/* WhatsApp number that receives every enquiry: country code + number, digits only (91 = India). CHANGE THIS. */
+const WHATSAPP = '919876543210';
+const waLink = (text) => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`;
 
-/* ---------- shared header / footer ---------- */
-async function loadComponents() {
-  await Promise.all([...document.querySelectorAll('[data-include]')].map(async (el) => {
-    try {
-      const res = await fetch(`components/${el.dataset.include}.html`);
-      if (!res.ok) throw new Error(res.status);
-      el.outerHTML = await res.text();
-    } catch (err) {
-      console.error(`[Annapurna] Could not load "${el.dataset.include}". Open the site through a local server (Live Server), not by double-clicking.`, err);
-    }
-  }));
+/* ---------- shared header / footer (components/header.js, components/footer.js) ---------- */
+function loadComponents() {
+  document.querySelectorAll('[data-include]').forEach((el) => {
+    el.outerHTML = (window.Components && Components[el.dataset.include]) || '';
+  });
 }
 
 /* ---------- decorative leaf sprigs: <i class="sp" data-sp="gold:7"> ---------- */
@@ -162,10 +158,26 @@ function initFaq() {
   });
 }
 
-/* ---------- reservations + contact: demo forms (no backend yet) ---------- */
+/* ---------- WhatsApp enquiries ---------- */
+/* Dish buttons: <a data-enquire="Dish name"> opens WhatsApp with a ready message */
+function initEnquiry() {
+  document.querySelectorAll('[data-enquire]').forEach((a) => {
+    a.href = waLink(`Hello Annapurna, I would like to enquire about *${a.dataset.enquire}*. Please share the details.`);
+    a.target = '_blank';
+    a.rel = 'noopener';
+  });
+}
+
+/* Forms: <form data-form="Enquiry title"> sends all filled fields to WhatsApp */
 function initForms() {
   document.querySelectorAll('form[data-form]').forEach((form) => form.addEventListener('submit', (e) => {
     e.preventDefault();
+    const lines = [`*${form.dataset.form}*`];
+    form.querySelectorAll('input, select, textarea').forEach((f) => {
+      const label = f.previousElementSibling?.textContent.replace('*', '').trim();
+      if (label && f.value.trim()) lines.push(`${label}: ${f.value.trim()}`);
+    });
+    window.open(waLink(lines.join('\n')), '_blank', 'noopener');
     const ok = form.querySelector('[data-ok]');
     ok.dataset.show = true;
     form.reset();
@@ -177,7 +189,7 @@ function initForms() {
 
 /* ---------- boot ---------- */
 injectSprite();
-await loadComponents();
+loadComponents();
 renderSprigs();
 hydrateIcons();
 initHeader();
@@ -186,4 +198,5 @@ initSlider();
 initFilter();
 initLightbox();
 initFaq();
+initEnquiry();
 initForms();

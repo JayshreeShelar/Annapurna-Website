@@ -1,6 +1,6 @@
 /* Annapurna - SVG icon sprite + <i data-i="name"> hydration */
 const C=(x,y,r)=>`M${x-r} ${y}a${r} ${r} 0 1 0 ${2*r} 0a${r} ${r} 0 1 0 ${-2*r} 0`;
-export const ICONS={
+const ICONS={
 leaf:"M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12",
 sprout:"M7 20h10 M10 20c5.5-2.5.8-6.4 3-10 M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z",
 pot:"M3 11h18 M5 11v7a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-7 M2 11h2 M20 11h2 M8 7c0-1.5 1-1.5 1-3 M12 7c0-1.5 1-1.5 1-3 M16 7c0-1.5 1-1.5 1-3",
@@ -33,13 +33,13 @@ cake:"M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8 M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4
 globe:C(12,12,10)+" M2 12h20 M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
 };
 
-export function injectSprite(){
+function injectSprite(){
   let sp='<svg width="0" height="0" style="position:absolute"><defs>';
   for(const k in ICONS)sp+=`<symbol id="i-${k}" viewBox="0 0 24 24">${ICONS[k].split(' M').map((d,i)=>`<path d="${i?'M':''}${d}"/>`).join('')}</symbol>`;
   sp+='</defs></svg>';
   document.body.insertAdjacentHTML('afterbegin',sp);
 }
 
-export function hydrateIcons(root=document){
+function hydrateIcons(root=document){
   root.querySelectorAll('[data-i]:not(.ic)').forEach(e=>{e.classList.add('ic');e.innerHTML=`<svg><use href="#i-${e.dataset.i}"/></svg>`});
 }
