@@ -1,5 +1,8 @@
 /* Annapurna - Tailwind (CDN) config: theme tokens, keyframes and reusable components.
    Loaded right after https://cdn.tailwindcss.com in every page. */
+/* Tells CSS that JS is running (enables the scroll-reveal start state). */
+document.documentElement.classList.add('js');
+
 const EASE = 'cubic-bezier(.2,.7,.2,1)';
 
 tailwind.config = {
