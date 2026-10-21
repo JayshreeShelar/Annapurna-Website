@@ -2,7 +2,7 @@
    Loads header/footer, icons, sprigs, scroll effects, and page-specific features
    (each feature only runs if its elements exist on the page). */
 /* WhatsApp number that receives every enquiry: country code + number, digits only (91 = India). CHANGE THIS. */
-const WHATSAPP = '919876543210';
+const WHATSAPP = '9309154396';
 const waLink = (text) => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`;
 
 /* ---------- shared header / footer (components/header.js, components/footer.js) ---------- */
