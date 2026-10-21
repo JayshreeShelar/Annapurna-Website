@@ -1,11 +1,11 @@
 # Annapurna Pure Veg Restaurant
 
-Static site, Tailwind CSS (CDN). No ordering or booking: every "Enquire" button and form opens WhatsApp.
+Static site, Tailwind CSS (CDN). No ordering or booking: every dish "Enquire" button and the Book a Table / contact forms open WhatsApp.
 Works by double-clicking `index.html` (no server needed; internet is needed for Tailwind, fonts and the map).
 
 ```
 annapurna/
-├── index.html  story.html  menu.html  specials.html  gallery.html  enquiry.html  contact.html
+├── index.html  story.html  menu.html  specials.html  gallery.html  reservations.html  contact.html
 ├── components/   header.js, footer.js      (common header/footer, edit once, shows on every page)
 ├── js/
 │   ├── tailwind.config.js   colors, fonts, animations, buttons/backgrounds
